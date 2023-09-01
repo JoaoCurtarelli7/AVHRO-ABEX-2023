@@ -1,0 +1,22 @@
+.header2 {
+  background-color: #f0f0f0;
+  padding: 16px;
+  border-bottom: 2px solid #609fff;
+  margin-bottom: 20px;
+  margin-top: -10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.header2 a {
+  margin-right: 16px;
+  color: #0066ff;
+  text-decoration: none;
+  font-weight: bold;
+  transition: color 0.3s;
+}
+
+.header2 a:hover {
+  color: #609fff;
+}

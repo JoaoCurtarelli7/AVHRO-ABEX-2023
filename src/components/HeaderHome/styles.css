@@ -1,0 +1,33 @@
+/* styles.css */
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.title {
+  margin: 0;
+  color: #609fff;
+  font-size: 18px;
+  font-weight: bold;
+  display: flex;
+  justify-content: center;
+}
+
+.divider-title {
+  background-color: #609fff;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+
+  border-width: 2px;
+}
+
+.subtitle {
+  margin: 0;
+  color: #609fff;
+  font-size: 18px;
+  font-weight: bold;
+  display: flex;
+  justify-content: center;
+}

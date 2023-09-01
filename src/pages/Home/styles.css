@@ -1,0 +1,46 @@
+/* styles.css */
+
+.quadrados {
+  display: flex;
+  justify-content: center;
+  margin-top: 50px;
+}
+
+.quadrado {
+  display: flex;
+  justify-content: center;
+  width: 150px;
+  height: 130px;
+  margin: 0 20px;
+  border-radius: 10px;
+  background: #609fff;
+  transition: width 0.3s, height 0.3s, background 0.3s;
+}
+
+.quadrado:hover {
+  width: 160px;
+  height: 140px;
+  background: #448fff;
+  cursor: pointer;
+}
+
+.text-quadrado {
+  color: #f1f1f1;
+  text-align: center;
+  font-family: Montserrat;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.image {
+  display: flex;
+  justify-content: center;
+  margin: 10px 0;
+  width: 100%;
+  padding: 0;
+}
