@@ -1,52 +1,55 @@
-import React from "react";
-import { Col, Form, Row, Table } from "antd";
+import React, { useState } from "react";
+import { Button, Col, Form, Input, Row, Select, Table } from "antd";
 import "./styles.css";
-function DonationReceivedList() {
+import TitleCreateList from "../../../components/TitleCreate";
+import InputMask from "react-input-mask";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
+
+function DonorList({ data }) {
   const columns = [
     {
-      title: "Item doado",
-      dataIndex: "item",
+      title: "Nome",
+      dataIndex: "name",
     },
     {
-      title: "Data da doação",
+      title: "CPF",
+      dataIndex: "cpf",
+    },
+    {
+      title: "Data de Cadastro",
       dataIndex: "date",
     },
     {
-      title: "Doador",
-      dataIndex: "doador",
-    },
-    {
       title: "Ações",
-    },
-  ];
-
-  const data = [
-    {
-      key: "1",
-      date: "05/09/2023",
-      item: "Casaco",
-      doador: "João Curtarelli",
-    },
-    {
-      key: "2",
-      date: "05/09/2023",
-      item: "Coberta",
-      doador: "Gbariel Santin",
+      align: "center",
+      render: () => {
+        return (
+          <div style={{ display: "flex", justifyContent: "center" }}>
+            <FontAwesomeIcon
+              icon={faEdit}
+              style={{ marginRight: "20px", cursor: "pointer" }}
+              size="xl"
+              isButton
+            />
+            <FontAwesomeIcon
+              icon={faTrash}
+              size="xl"
+              style={{ cursor: "pointer" }}
+            />
+          </div>
+        );
+      },
     },
   ];
 
   return (
     <Form>
-      <Row
-        gutter={[20, 16]}
-        style={{ display: "flex", justifyContent: "center" }}
-      >
-        <Col span={22}>
-          <div className="title-table">
-            <span className="content-title">Listagem Doações Recebidas</span>
-          </div>
-        </Col>
-      </Row>
+      <TitleCreateList
+        textTitle="Listagem de Doadores"
+        route="/doadores/cadastro"
+        create={false}
+      />
 
       <Row
         gutter={[20, 16]}
@@ -60,4 +63,4 @@ function DonationReceivedList() {
   );
 }
 
-export default DonationReceivedList;
+export default DonorList;

@@ -1,14 +1,18 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
-import DoacaoTable from "./pages/Doacao/Listagem";
 import Home from "./pages/Home";
 import HeaderHome from "./components/HeaderHome";
 import HeaderPages from "./components/HeaderPages";
-import DonationReceivedCreate from "./pages/Doacao/Cadastro";
+import DonationReceivedCreate from "./pages/DoacaoRecebidas/Cadastro";
 import DonationDeliveredList from "./pages/DoacaoEntregues/Listagem";
 import DonationDeliveredCreate from "./pages/DoacaoEntregues/Cadastro";
 import GranteeList from "./pages/Grantee/Listagem";
 import GranteeCreate from "./pages/Grantee/Cadastro";
+import DonorList from "./pages/Doadores/Listagem";
+import DonorCreate from "./pages/Doadores/Cadastro";
+import DonationReceivedList from "./pages/DoacaoRecebidas/Listagem";
+import FamilyCreate from "./pages/Familias/Cadastro";
+import FamilyList from "./pages/Familias/Listagem";
 
 function AppRoutes() {
   return (
@@ -21,7 +25,7 @@ function AppRoutes() {
       <Routes>
         <Route path="/" element={<Home />} />
 
-        <Route path="/doacoes-recebidas" element={<DoacaoTable />} />
+        <Route path="/doacoes-recebidas" element={<DonationReceivedList />} />
         <Route
           path="/doacoes-recebidas/cadastro"
           element={<DonationReceivedCreate />}
@@ -36,8 +40,11 @@ function AppRoutes() {
         <Route path="/donatarios" element={<GranteeList />} />
         <Route path="/donatarios/cadastro" element={<GranteeCreate />} />
 
-        <Route path="/doadores" element={<DoacaoTable />} />
-        <Route path="/familias" element={<DoacaoTable />} />
+        <Route path="/doadores" element={<DonorList />} />
+        <Route path="/doadores/cadastro" element={<DonorCreate />} />
+
+        <Route path="/familias" element={<FamilyList />} />
+        <Route path="/familias/cadastro" element={<FamilyCreate />} />
 
         <Route path="*" element={<div>Página não encontrada</div>} />
       </Routes>

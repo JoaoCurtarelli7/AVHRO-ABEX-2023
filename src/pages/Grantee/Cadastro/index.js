@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Checkbox, Col, Form, Input, Row, Select, Table } from "antd";
+import { Button, Col, Form, Input, Row, Select } from "antd";
 import "./styles.css";
 import TitleCreateList from "../../../components/TitleCreate";
 
@@ -19,11 +19,8 @@ function GranteeCreate() {
         create={true}
       />
 
-      <Row
-        gutter={[20, 16]}
-        style={{ display: "flex", justifyContent: "center" }}
-      >
-        <Col span={10}>
+      <Row gutter={[20, 16]}>
+        <Col span={10} offset={2}>
           <Form.Item
             label="Selecione o Doador"
             name="doador"
@@ -57,6 +54,30 @@ function GranteeCreate() {
                 },
               ]}
             />
+          </Form.Item>
+        </Col>
+
+        <Col span={10}>
+          <Form.Item
+            label="Data de Cadastro"
+            name="date"
+            labelCol={{ span: 24 }}
+            wrapperCol={{ span: 24 }}
+          >
+            <Input type="date" size="large" />
+          </Form.Item>
+        </Col>
+      </Row>
+
+      <Row gutter={[20, 16]}>
+        <Col span={10} offset={2}>
+          <Form.Item
+            label="CPF"
+            name="cpf"
+            labelCol={{ span: 24 }}
+            wrapperCol={{ span: 24 }}
+          >
+            <Input size="large" type="number" />
           </Form.Item>
         </Col>
       </Row>
