@@ -1,11 +1,9 @@
 import React from "react";
-import { Col, Form, Row, Table } from "antd";
-
-import "./styles.css";
+import { Col, Form, Row, Table,Tabs } from "antd";
 import TitleCreateList from "../../../components/TitleCreate";
 import { faEdit, faRemove, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-
+import "./styles.css";
 function DonationDeliveredList() {
   const columns = [
     {
@@ -73,6 +71,7 @@ function DonationDeliveredList() {
         <Col span={22}>
           <Table dataSource={data} columns={columns} bordered />
         </Col>
+       
       </Row>
     </Form>
   );

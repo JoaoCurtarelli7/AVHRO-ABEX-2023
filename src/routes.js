@@ -1,7 +1,5 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-
 import Home from "./pages/Home";
-import HeaderHome from "./components/HeaderHome";
 import HeaderPages from "./components/HeaderPages";
 import DonationReceivedCreate from "./pages/DoacaoRecebidas/Cadastro";
 import DonationDeliveredList from "./pages/DoacaoEntregues/Listagem";
@@ -17,10 +15,7 @@ import FamilyList from "./pages/Familias/Listagem";
 function AppRoutes() {
   return (
     <BrowserRouter>
-      <Routes>
-        <Route path="/*" element={<HeaderPages />} />
-        <Route path="/" element={<HeaderHome />} />
-      </Routes>
+      <HeaderPages />
 
       <Routes>
         <Route path="/" element={<Home />} />
