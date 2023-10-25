@@ -12,43 +12,47 @@ function Home() {
         <img src={image} alt="" height="350" width="80%" />
       </Row>
 
+      <div className="title">
+        <span className="text-title">PROGRAMAS E PROJETOS</span>
+      </div>
+
       <Row gutter={[20, 16]} className="quadrados">
         <Col>
-          <Link to="/doacoes-recebidas">
+          <Link to="">
             <div className="quadrado">
-              <span className="text-quadrado">Doações Recebidas</span>
+              <span className="text-quadrado">Vestir o Bem</span>
             </div>
           </Link>
         </Col>
 
         <Col>
-          <Link to="/doacaos-entregues">
+          <Link to="">
             <div className="quadrado">
-              <span className="text-quadrado">Doações Entregues</span>
+              <span className="text-quadrado">Fome Zero</span>
             </div>
           </Link>
         </Col>
 
         <Col>
-          <Link to="/donatarios">
+          <Link to="">
             <div className="quadrado">
-              <span className="text-quadrado">Donatários</span>
+              <span className="text-quadrado">Dinheiro</span>
             </div>
           </Link>
         </Col>
 
         <Col>
-          <Link to="/doadores">
+          <Link to="">
             <div className="quadrado">
-              <span className="text-quadrado">Doadores</span>
+              <span className="text-quadrado">Brinquedos</span>
             </div>
           </Link>
         </Col>
 
         <Col>
-          <Link to="/familias">
+          <Link to="">
             <div className="quadrado">
-              <span className="text-quadrado">Famílias</span>
+              <span className="text-quadrado">Livros</span>
             </div>
           </Link>
         </Col>
