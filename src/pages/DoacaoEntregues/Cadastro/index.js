@@ -1,9 +1,26 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Button, Checkbox, Col, Form, Input, Row, Select, Table } from "antd";
 import "./styles.css";
 import TitleCreateList from "../../../components/TitleCreate";
+import { useLocation } from "react-router-dom";
 
 function DonationDeliveredCreate() {
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
+  const donatario = searchParams.get("donatario");
+  const item = searchParams.get("item");
+  
+  
+  const [form] = Form.useForm();
+  useEffect(() => {
+    form.setFieldsValue({
+      item,
+      donatario
+    });
+
+    console.log(form);
+  }, [form, donatario, item]);
+
   const onChange = (value) => {
     console.log(`selected ${value}`);
   };
@@ -11,11 +28,16 @@ function DonationDeliveredCreate() {
     console.log("search:", value);
   };
 
+  const onFinish = (values) => {
+    // Lide com a submissão do formulário de edição aqui
+    console.log("Valores do formulário de edição:", values);
+  };
+
   return (
-    <Form>
+    <Form form={form} onFinish={onFinish}>
       <TitleCreateList
         textTitle="Cadastro de Doação Entrega"
-        route="/doacoes-entregues"
+        route="/doacaos-entregues"
         create={true}
       />
 
@@ -59,7 +81,7 @@ function DonationDeliveredCreate() {
         <Col span={10}>
           <Form.Item
             label="Selecione o Doador"
-            name="doador"
+            name="donatario"
             labelCol={{ span: 24 }}
             wrapperCol={{ span: 24 }}
           >

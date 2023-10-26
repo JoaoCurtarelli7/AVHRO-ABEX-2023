@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, useMatch, useMatches } from "react-router-dom";
 import Home from "./pages/Home";
 import HeaderPages from "./components/HeaderPages";
 import DonationReceivedCreate from "./pages/DoacaoRecebidas/Cadastro";
@@ -11,8 +11,11 @@ import DonorCreate from "./pages/Doadores/Cadastro";
 import DonationReceivedList from "./pages/DoacaoRecebidas/Listagem";
 import FamilyCreate from "./pages/Familias/Cadastro";
 import FamilyList from "./pages/Familias/Listagem";
+import NotFound from "./pages/NotFoud";
+
 
 function AppRoutes() {
+
   return (
     <BrowserRouter>
       <HeaderPages />
@@ -41,7 +44,7 @@ function AppRoutes() {
         <Route path="/familias" element={<FamilyList />} />
         <Route path="/familias/cadastro" element={<FamilyCreate />} />
 
-        <Route path="*" element={<div>Página não encontrada</div>} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>
   );
