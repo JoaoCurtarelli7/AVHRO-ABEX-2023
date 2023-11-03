@@ -1,24 +1,27 @@
-import React from "react";
 import { Col, Form, Row, Table } from "antd";
-import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import TitleCreateList from "../../../components/TitleCreate";
 
 import "./styles.css";
+import TitleCreateList from "../../../components/TitleCreate";
+import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-function DonationReceivedList() {
+function FamilyList() {
   const columns = [
     {
-      title: "Item doado",
-      dataIndex: "item",
+      title: "Nome",
+      dataIndex: "name",
     },
     {
-      title: "Data da doação",
+      title: "Numero de Integrantes",
+      dataIndex: "number",
+    },
+    {
+      title: "Bairro",
+      dataIndex: "district",
+    },
+    {
+      title: "Data de Cadastro",
       dataIndex: "date",
-    },
-    {
-      title: "Doador",
-      dataIndex: "doador",
     },
     {
       title: "Ações",
@@ -29,11 +32,13 @@ function DonationReceivedList() {
             <FontAwesomeIcon
               icon={faEdit}
               style={{ marginRight: "20px", cursor: "pointer" }}
-              size="xl"
               isButton
+              size="xl"
             />
+
             <FontAwesomeIcon
               icon={faTrash}
+              isButton
               size="xl"
               style={{ cursor: "pointer" }}
             />
@@ -46,23 +51,25 @@ function DonationReceivedList() {
   const data = [
     {
       key: "1",
+      name: "Gabriel Santin",
+      number: "2",
+      district: "Centro",
       date: "05/09/2023",
-      item: "Casaco",
-      doador: "João Curtarelli",
     },
     {
-      key: "2",
+      key: "1",
+      name: "João Curtarelli",
+      number: "2",
+      district: "Efapi",
       date: "05/09/2023",
-      item: "Coberta",
-      doador: "Gbariel Santin",
     },
   ];
 
   return (
     <Form>
       <TitleCreateList
-        textTitle="Lista de Doações Recebidas"
-        route="/doacoes-recebidas/cadastro"
+        textTitle="Listagem de Familía"
+        route="/familias/cadastro"
         create={false}
       />
 
@@ -78,4 +85,4 @@ function DonationReceivedList() {
   );
 }
 
-export default DonationReceivedList;
+export default FamilyList;

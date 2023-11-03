@@ -1,28 +1,23 @@
-import React from "react";
 import { Col, Form, Row, Table } from "antd";
-
-import "./styles.css";
-import TitleCreateList from "../../../components/TitleCreate";
 import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import TitleCreateList from "../../../components/TitleCreate";
 
-function FamilyList() {
+import "./styles.css";
+
+function DonationReceivedList() {
   const columns = [
     {
-      title: "Nome",
-      dataIndex: "name",
+      title: "Item doado",
+      dataIndex: "item",
     },
     {
-      title: "Numero de Integrantes",
-      dataIndex: "number",
-    },
-    {
-      title: "Bairro",
-      dataIndex: "district",
-    },
-    {
-      title: "Data de Cadastro",
+      title: "Data da doação",
       dataIndex: "date",
+    },
+    {
+      title: "Doador",
+      dataIndex: "doador",
     },
     {
       title: "Ações",
@@ -33,13 +28,11 @@ function FamilyList() {
             <FontAwesomeIcon
               icon={faEdit}
               style={{ marginRight: "20px", cursor: "pointer" }}
-              isButton
               size="xl"
+              isButton
             />
-
             <FontAwesomeIcon
               icon={faTrash}
-              isButton
               size="xl"
               style={{ cursor: "pointer" }}
             />
@@ -52,25 +45,23 @@ function FamilyList() {
   const data = [
     {
       key: "1",
-      name: "Gabriel Santin",
-      number: "2",
-      district: "Centro",
       date: "05/09/2023",
+      item: "Casaco",
+      doador: "João Curtarelli",
     },
     {
-      key: "1",
-      name: "João Curtarelli",
-      number: "2",
-      district: "Efapi",
+      key: "2",
       date: "05/09/2023",
+      item: "Coberta",
+      doador: "Gbariel Santin",
     },
   ];
 
   return (
     <Form>
       <TitleCreateList
-        textTitle="Listagem de Familía"
-        route="/familias/cadastro"
+        textTitle="Lista de Doações Recebidas"
+        route="/doacoes-recebidas/cadastro"
         create={false}
       />
 
@@ -86,4 +77,4 @@ function FamilyList() {
   );
 }
 
-export default FamilyList;
+export default DonationReceivedList;

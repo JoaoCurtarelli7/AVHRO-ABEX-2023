@@ -1,7 +1,5 @@
-import React from "react";
 import "./styles.css"; // Certifique-se de importar o arquivo de estilos
 import { Col, Divider, Row } from "antd";
-import Link from "antd/es/typography/Link";
 
 function HeaderHome() {
   return (

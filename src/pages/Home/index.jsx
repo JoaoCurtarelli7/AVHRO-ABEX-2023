@@ -1,4 +1,3 @@
-import React from "react";
 import { Row, Col } from "antd";
 import image from "../../components/assets/image3.png";
 import { Link } from "react-router-dom";

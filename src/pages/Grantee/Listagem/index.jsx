@@ -1,9 +1,8 @@
-import React from "react";
 import { Col, Form, Row, Table } from "antd";
 
 import "./styles.css";
 import TitleCreateList from "../../../components/TitleCreate";
-import { faEdit, faRemove, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 function GranteeList() {

@@ -1,8 +1,10 @@
-import React, { useState } from "react";
+import { useEffect, useState } from "react";
 import { Col, Form, Row, Table } from "antd";
 import TitleCreateList from "../../../components/TitleCreate";
 import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import api from "../../../lib/api";
+
 import "./styles.css";
 
 function DonationDeliveredList() {
@@ -21,17 +23,28 @@ function DonationDeliveredList() {
     },
   ]);
 
+  useEffect(() => {
+    console.log("teste");
+
+    api.get("/doacaos-entregues").then((response) => {
+      console.log(response.data);
+    });
+  }, []);
+
   const handleRemove = (id) => {
     // Crie uma nova lista excluindo o registro com o ID fornecido
-    const updatedList = listDoacaoEntregues.filter((registro) => registro.id !== id);
+    const updatedList = listDoacaoEntregues.filter(
+      (registro) => registro.id !== id
+    );
     setListDoacaoEntregues(updatedList);
     console.log(`Registro com ID ${id} removido com sucesso.`);
   };
 
   const handleEdit = (id) => {
     // Encontre o registro com o ID fornecido na lista
-    const registroParaEditar = listDoacaoEntregues.find((registro) => registro.id === id);
-  
+    const registroParaEditar = listDoacaoEntregues.find(
+      (registro) => registro.id === id
+    );
 
     if (registroParaEditar) {
       // Redirecione para a tela de cadastro e envie os dados do registro para edição
@@ -90,7 +103,10 @@ function DonationDeliveredList() {
         create={false}
       />
 
-      <Row gutter={[20, 16]} style={{ display: "flex", justifyContent: "center" }}>
+      <Row
+        gutter={[20, 16]}
+        style={{ display: "flex", justifyContent: "center" }}
+      >
         <Col span={22}>
           <Table dataSource={listDoacaoEntregues} columns={columns} bordered />
         </Col>
