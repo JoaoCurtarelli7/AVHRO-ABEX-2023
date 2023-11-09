@@ -23,24 +23,24 @@ function AppRoutes() {
 
         <Route path="/doacoes-recebidas" element={<DonationReceivedList />} />
         <Route
-          path="/doacoes-recebidas/cadastro"
+          path="/doacoes-recebidas-cadastro/:id?"
           element={<DonationReceivedCreate />}
         />
 
-        <Route path="/doacaos-entregues" element={<DonationDeliveredList />} />
+        <Route path="/doacoes-entregues" element={<DonationDeliveredList />} />
         <Route
-          path="/doacoes-entregues/cadastro"
+          path="/doacoes-entregues-cadastro/:id?"
           element={<DonationDeliveredCreate />}
         />
 
         <Route path="/donatarios" element={<GranteeList />} />
-        <Route path="/donatarios/cadastro" element={<GranteeCreate />} />
+        <Route path="/donatarios-cadastro/:id?" element={<GranteeCreate />} />
 
         <Route path="/doadores" element={<DonorList />} />
-        <Route path="/doadores/cadastro" element={<DonorCreate />} />
+        <Route path="/doadores-cadastro/:id?" element={<DonorCreate />} />
 
         <Route path="/familias" element={<FamilyList />} />
-        <Route path="/familias/cadastro" element={<FamilyCreate />} />
+        <Route path="/familias-cadastro/:id?" element={<FamilyCreate />} />
 
         <Route path="*" element={<NotFound />} />
       </Routes>

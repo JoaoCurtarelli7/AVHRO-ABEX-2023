@@ -15,7 +15,7 @@ function HeaderPages() {
       </Col>
 
       <Col>
-        <Link to="/doacaos-entregues">Doações Entregues</Link>
+        <Link to="/doacoes-entregues">Doações Entregues</Link>
       </Col>
 
       <Col>

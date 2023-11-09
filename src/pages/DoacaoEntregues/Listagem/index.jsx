@@ -4,52 +4,47 @@ import TitleCreateList from "../../../components/TitleCreate";
 import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import api from "../../../lib/api";
+import { useNavigate } from "react-router-dom";
 
 import "./styles.css";
 
 function DonationDeliveredList() {
-  const [listDoacaoEntregues, setListDoacaoEntregues] = useState([
-    {
-      id: 1,
-      date: "05/09/2023",
-      item: "Casaco",
-      donatario: "João Curtarelli",
-    },
-    {
-      id: 2,
-      date: "05/09/2023",
-      item: "Coberta",
-      donatario: "Gabriel Santin",
-    },
-  ]);
+  const [listDoacaoEntregues, setListDoacaoEntregues] = useState([]);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     console.log("teste");
 
-    api.get("/doacaos-entregues").then((response) => {
-      console.log(response.data);
+    api.get("/doacoes-entregues").then((response) => {
+      setListDoacaoEntregues(response.data);
     });
   }, []);
 
   const handleRemove = (id) => {
-    // Crie uma nova lista excluindo o registro com o ID fornecido
-    const updatedList = listDoacaoEntregues.filter(
-      (registro) => registro.id !== id
-    );
-    setListDoacaoEntregues(updatedList);
-    console.log(`Registro com ID ${id} removido com sucesso.`);
-  };
+    api
+      .delete(`/doacoes-entregues/${id}`)
+      .then(() => {
+        const updatedList = listDoacaoEntregues.filter(
+          (registro) => registro.id !== id
+        );
+        setListDoacaoEntregues(updatedList);
 
+        console.log(`Registro com ID ${id} removido com sucesso.`);
+      })
+      .catch((error) => {
+        console.error(
+          `Erro ao remover o registro com ID ${id}: ${error.message}`
+        );
+      });
+  };
   const handleEdit = (id) => {
-    // Encontre o registro com o ID fornecido na lista
     const registroParaEditar = listDoacaoEntregues.find(
       (registro) => registro.id === id
     );
 
     if (registroParaEditar) {
-      // Redirecione para a tela de cadastro e envie os dados do registro para edição
-      const editRoute = `/doacoes-entregues/cadastro?id=${registroParaEditar.id}&donatario=${registroParaEditar.donatario}&item=${registroParaEditar.item}`;
-      window.location.href = editRoute;
+      navigate(`/doacoes-entregues-cadastro/${id}`);
     } else {
       console.log(`Nenhum registro encontrado com o ID ${id}.`);
     }
@@ -63,10 +58,22 @@ function DonationDeliveredList() {
     {
       title: "Data da Entrega",
       dataIndex: "date",
+      render: (value) => {
+        const data = new Date(value);
+
+        const dia = String(data.getDate()).padStart(2, "0");
+        const mes = String(data.getMonth() + 1).padStart(2, "0");
+        const ano = data.getFullYear();
+
+        return `${dia}/${mes}/${ano}`;
+      },
     },
     {
       title: "Donatário",
       dataIndex: "donatario",
+      render: (value) => {
+        return value.name;
+      },
     },
     {
       title: "Ações",
@@ -99,7 +106,7 @@ function DonationDeliveredList() {
     <Form>
       <TitleCreateList
         textTitle="Listagem de Doações Entregues"
-        route="/doacoes-entregues/cadastro"
+        route="/doacoes-entregues-cadastro"
         create={false}
       />
 

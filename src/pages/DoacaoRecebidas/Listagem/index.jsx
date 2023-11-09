@@ -4,8 +4,18 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import TitleCreateList from "../../../components/TitleCreate";
 
 import "./styles.css";
+import { useEffect, useState } from "react";
+import api from "../../../lib/api";
 
 function DonationReceivedList() {
+  const [listDoacaoRecebidas, setListDoacaoRecebidas] = useState([]);
+
+  useEffect(() => {
+    api.get("/doacoes-recebidas").then((response) => {
+      setListDoacaoRecebidas(response.data);
+    });
+  }, []);
+
   const columns = [
     {
       title: "Item doado",
@@ -42,26 +52,11 @@ function DonationReceivedList() {
     },
   ];
 
-  const data = [
-    {
-      key: "1",
-      date: "05/09/2023",
-      item: "Casaco",
-      doador: "João Curtarelli",
-    },
-    {
-      key: "2",
-      date: "05/09/2023",
-      item: "Coberta",
-      doador: "Gbariel Santin",
-    },
-  ];
-
   return (
     <Form>
       <TitleCreateList
         textTitle="Lista de Doações Recebidas"
-        route="/doacoes-recebidas/cadastro"
+        route="/doacoes-recebidas-cadastro"
         create={false}
       />
 
@@ -70,7 +65,7 @@ function DonationReceivedList() {
         style={{ display: "flex", justifyContent: "center" }}
       >
         <Col span={22}>
-          <Table dataSource={data} columns={columns} bordered />
+          <Table dataSource={listDoacaoRecebidas} columns={columns} bordered />
         </Col>
       </Row>
     </Form>

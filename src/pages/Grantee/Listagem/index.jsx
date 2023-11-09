@@ -4,8 +4,19 @@ import "./styles.css";
 import TitleCreateList from "../../../components/TitleCreate";
 import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useEffect, useState } from "react";
+import api from "../../../lib/api";
+import dayjs from "dayjs";
 
 function GranteeList() {
+  const [listDonatario, setListDonatario] = useState([]);
+
+  useEffect(() => {
+    api.get("/donatarios").then((response) => {
+      setListDonatario(response.data);
+    });
+  }, []);
+
   const columns = [
     {
       title: "Nome",
@@ -17,7 +28,10 @@ function GranteeList() {
     },
     {
       title: "Data de Cadastro",
-      dataIndex: "date",
+      dataIndex: "dataCadastro",
+      render: (value) => {
+        return dayjs(value).format("DD/MM/YYYY");
+      },
     },
     {
       title: "Ações",
@@ -42,26 +56,11 @@ function GranteeList() {
     },
   ];
 
-  const data = [
-    {
-      key: "1",
-      date: "05/09/2023",
-      cpf: "999.999.999-99",
-      name: "João Curtarelli",
-    },
-    {
-      key: "2",
-      date: "05/09/2023",
-      cpf: "999.999.999-99",
-      name: "Gbariel Santin",
-    },
-  ];
-
   return (
     <Form>
       <TitleCreateList
         textTitle="Listagem de Donatários"
-        route="/donatarios/cadastro"
+        route="/donatarios-cadastro"
         create={false}
       />
 
@@ -70,7 +69,7 @@ function GranteeList() {
         style={{ display: "flex", justifyContent: "center" }}
       >
         <Col span={22}>
-          <Table dataSource={data} columns={columns} bordered />
+          <Table dataSource={listDonatario} columns={columns} bordered />
         </Col>
       </Row>
     </Form>

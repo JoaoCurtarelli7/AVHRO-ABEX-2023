@@ -1,16 +1,9 @@
-import React, { useState } from "react";
-import { Button, Col, Form, Input, List, Row, Select } from "antd";
+import { useState } from "react";
+import { Button, Col, Form, Input, List, Row } from "antd";
 import "./styles.css";
 import TitleCreateList from "../../../components/TitleCreate";
 
 function FamilyCreate() {
-  const onChange = (value) => {
-    console.log(`selected ${value}`);
-  };
-  const onSearch = (value) => {
-    console.log("search:", value);
-  };
-
   const [name, setName] = useState("");
   const [names, setNames] = useState([]);
 

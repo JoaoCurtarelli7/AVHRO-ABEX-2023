@@ -1,11 +1,39 @@
+import { useEffect, useState } from "react";
 import { Col, Form, Row, Table } from "antd";
-
-import "./styles.css";
 import TitleCreateList from "../../../components/TitleCreate";
 import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
+import "./styles.css";
+import api from "../../../lib/api";
+
 function FamilyList() {
+  const [listFamilia, setListFamilia] = useState([]);
+
+  useEffect(() => {
+    api.get("/familias").then((response) => {
+      setListFamilia(response.data);
+    });
+  }, []);
+
+  const handleRemove = (id) => {
+    api
+      .delete(`/familias/${id}`)
+      .then(() => {
+        const updatedList = listFamilia.filter(
+          (registro) => registro.id !== id
+        );
+        setListFamilia(updatedList);
+
+        console.log(`Registro com ID ${id} removido com sucesso.`);
+      })
+      .catch((error) => {
+        console.error(
+          `Erro ao remover o registro com ID ${id}: ${error.message}`
+        );
+      });
+  };
+
   const columns = [
     {
       title: "Nome",
@@ -13,20 +41,29 @@ function FamilyList() {
     },
     {
       title: "Numero de Integrantes",
-      dataIndex: "number",
+      dataIndex: "NumeroIntegrantes",
     },
     {
       title: "Bairro",
-      dataIndex: "district",
+      dataIndex: "bairro",
     },
     {
       title: "Data de Cadastro",
-      dataIndex: "date",
+      dataIndex: "dataCadastro",
+      render: (value) => {
+        const data = new Date(value);
+
+        const dia = String(data.getDate()).padStart(2, "0");
+        const mes = String(data.getMonth() + 1).padStart(2, "0");
+        const ano = data.getFullYear();
+
+        return `${dia}/${mes}/${ano}`;
+      },
     },
     {
       title: "Ações",
       aling: "center",
-      render: () => {
+      render: (_, record) => {
         return (
           <div style={{ display: "flex", justifyContent: "center" }}>
             <FontAwesomeIcon
@@ -41,6 +78,7 @@ function FamilyList() {
               isButton
               size="xl"
               style={{ cursor: "pointer" }}
+              onClick={() => handleRemove(record.id)}
             />
           </div>
         );
@@ -48,28 +86,11 @@ function FamilyList() {
     },
   ];
 
-  const data = [
-    {
-      key: "1",
-      name: "Gabriel Santin",
-      number: "2",
-      district: "Centro",
-      date: "05/09/2023",
-    },
-    {
-      key: "1",
-      name: "João Curtarelli",
-      number: "2",
-      district: "Efapi",
-      date: "05/09/2023",
-    },
-  ];
-
   return (
     <Form>
       <TitleCreateList
         textTitle="Listagem de Familía"
-        route="/familias/cadastro"
+        route="/familias-cadastro"
         create={false}
       />
 
@@ -78,7 +99,7 @@ function FamilyList() {
         style={{ display: "flex", justifyContent: "center" }}
       >
         <Col span={22}>
-          <Table dataSource={data} columns={columns} bordered />
+          <Table dataSource={listFamilia} columns={columns} bordered />
         </Col>
       </Row>
     </Form>
