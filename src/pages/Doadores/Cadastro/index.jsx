@@ -28,21 +28,7 @@ function DonorCreate() {
             <Input size="large" />
           </Form.Item>
         </Col>
-
         <Col span={10}>
-          <Form.Item
-            label="Data de Cadastro"
-            name="date"
-            labelCol={{ span: 24 }}
-            wrapperCol={{ span: 24 }}
-          >
-            <Input type="date" size="large" />
-          </Form.Item>
-        </Col>
-      </Row>
-
-      <Row gutter={[20, 16]}>
-        <Col span={10} offset={2}>
           <Form.Item
             label="CPF"
             name="cpf"

@@ -7,6 +7,7 @@ import api from "../../../lib/api";
 import { useNavigate } from "react-router-dom";
 
 import "./styles.css";
+import dayjs from "dayjs";
 
 function DonationDeliveredList() {
   const [listDoacaoEntregues, setListDoacaoEntregues] = useState([]);
@@ -38,6 +39,7 @@ function DonationDeliveredList() {
         );
       });
   };
+
   const handleEdit = (id) => {
     const registroParaEditar = listDoacaoEntregues.find(
       (registro) => registro.id === id
@@ -59,13 +61,7 @@ function DonationDeliveredList() {
       title: "Data da Entrega",
       dataIndex: "date",
       render: (value) => {
-        const data = new Date(value);
-
-        const dia = String(data.getDate()).padStart(2, "0");
-        const mes = String(data.getMonth() + 1).padStart(2, "0");
-        const ano = data.getFullYear();
-
-        return `${dia}/${mes}/${ano}`;
+        return dayjs(value).format("DD/MM/YYYY");
       },
     },
     {
@@ -85,7 +81,6 @@ function DonationDeliveredList() {
               icon={faEdit}
               style={{ marginRight: "20px", cursor: "pointer" }}
               size="xl"
-              isButton
               onClick={() => handleEdit(record.id)}
             />
 
@@ -93,7 +88,6 @@ function DonationDeliveredList() {
               icon={faTrash}
               size="xl"
               style={{ cursor: "pointer" }}
-              isButton
               onClick={() => handleRemove(record.id)}
             />
           </div>
@@ -115,7 +109,12 @@ function DonationDeliveredList() {
         style={{ display: "flex", justifyContent: "center" }}
       >
         <Col span={22}>
-          <Table dataSource={listDoacaoEntregues} columns={columns} bordered />
+          <Table
+            dataSource={listDoacaoEntregues}
+            columns={columns}
+            rowKey={(record) => record.id}
+            bordered
+          />
         </Col>
       </Row>
     </Form>

@@ -2,43 +2,42 @@
 import { Button, Col, Form, Input, Row, Select } from "antd";
 import "./styles.css";
 import TitleCreateList from "../../../components/TitleCreate";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import api from "../../../lib/api";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 function DonationDeliveredCreate() {
   const [form] = Form.useForm();
 
-  const [listDoacaoEntregues, setListDoacaoEntregues] = useState([]);
-  const [itemsOptions, setItemsOptions] = useState([]);
+  const [selectDoador, setSelectDoador] = useState([]);
 
   const { id } = useParams();
 
-  console.log(id);
+  const navigate = useNavigate();
 
   useEffect(() => {
-    api.get(`/doador`).then((response) => {
-      setListDoacaoEntregues(response.data);
+    api.get(`/donatarios`).then((response) => {
+      setSelectDoador(response.data);
     });
-  }, [id]);
 
-  useEffect(() => {
-    const mappedOptions = listDoacaoEntregues.map((item) => ({
+    api.get(`/doacoes-entregues/${id}`).then((response) => {
+      const { item, donatarioId } = response.data;
+
+      form.setFieldsValue({
+        item,
+        donatarioId,
+      });
+    });
+  }, [form, id]);
+
+  const itemsOptions = useMemo(() => {
+    const mappedOptions = selectDoador.map((item) => ({
       value: item.id,
       label: item.name,
     }));
 
-    console.log(mappedOptions);
-
-    setItemsOptions(mappedOptions);
-  }, [listDoacaoEntregues]);
-
-  const onChange = (value) => {
-    console.log(`selected ${value}`);
-  };
-  const onSearch = (value) => {
-    console.log("search:", value);
-  };
+    return mappedOptions;
+  }, [selectDoador]);
 
   const onFinish = async (values) => {
     try {
@@ -46,19 +45,20 @@ function DonationDeliveredCreate() {
       const formattedDate = currentDate.toISOString();
 
       const donatarioOption = itemsOptions.find(
-        (item) => item.value === values.donatario
+        (item) => item.value === values.donatarioId
       );
 
       const sendValues = {
         item: values.item,
-        donatario: donatarioOption.name, // Assumindo que o campo no estado é "name"
-        donatarioId: donatarioOption.id, // Substitua "id" pelo campo correto no seu estado
+        donatarioId: donatarioOption.value,
         date: formattedDate,
       };
-      console.log(sendValues, "sendValues");
-      api.post("/doacoes-entregues", sendValues);
+
+      await api
+        .post("/doacoes-entregues", sendValues)
+        .then(() => navigate("/doacoes-entregues"));
     } catch (error) {
-      console.error("Erro ao enviar para a API:", error);
+      console.log(error);
     }
   };
 
@@ -88,7 +88,7 @@ function DonationDeliveredCreate() {
         <Col span={10}>
           <Form.Item
             label="Selecione o Doador"
-            name="donatario"
+            name="donatarioId"
             labelCol={{ span: 24 }}
             wrapperCol={{ span: 24 }}
           >
@@ -96,9 +96,6 @@ function DonationDeliveredCreate() {
               size="large"
               showSearch
               placeholder="Item"
-              optionFilterProp="children"
-              onChange={onChange}
-              onSearch={onSearch}
               filterOption={(input, option) =>
                 (option?.label ?? "")
                   .toLowerCase()
@@ -112,10 +109,7 @@ function DonationDeliveredCreate() {
 
       <Row gutter={[20, 16]}>
         <Col offset={20}>
-          <Button
-            type="primary"
-            onClick={() => (window.location.href = "/doacoes-entregues")}
-          >
+          <Button type="primary" htmlType="submit">
             Adicionar
           </Button>
         </Col>

@@ -4,8 +4,8 @@ import HeaderPages from "./components/HeaderPages";
 import DonationReceivedCreate from "./pages/DoacaoRecebidas/Cadastro";
 import DonationDeliveredList from "./pages/DoacaoEntregues/Listagem";
 import DonationDeliveredCreate from "./pages/DoacaoEntregues/Cadastro";
-import GranteeList from "./pages/Grantee/Listagem";
-import GranteeCreate from "./pages/Grantee/Cadastro";
+import DonatariosList from "./pages/Donatarios/Listagem";
+import DonatariosCreate from "./pages/Donatarios/Cadastro";
 import DonorList from "./pages/Doadores/Listagem";
 import DonorCreate from "./pages/Doadores/Cadastro";
 import DonationReceivedList from "./pages/DoacaoRecebidas/Listagem";
@@ -33,8 +33,11 @@ function AppRoutes() {
           element={<DonationDeliveredCreate />}
         />
 
-        <Route path="/donatarios" element={<GranteeList />} />
-        <Route path="/donatarios-cadastro/:id?" element={<GranteeCreate />} />
+        <Route path="/donatarios" element={<DonatariosList />} />
+        <Route
+          path="/donatarios-cadastro/:id?"
+          element={<DonatariosCreate />}
+        />
 
         <Route path="/doadores" element={<DonorList />} />
         <Route path="/doadores-cadastro/:id?" element={<DonorCreate />} />
