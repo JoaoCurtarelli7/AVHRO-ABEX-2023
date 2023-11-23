@@ -1,13 +1,13 @@
 import { Col, Form, Row, Table } from "antd";
 
-import "./styles.css";
-import TitleCreateList from "../../../components/TitleCreate";
 import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useEffect, useState } from "react";
-import api from "../../../lib/api";
 import dayjs from "dayjs";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import TitleCreateList from "../../../components/TitleCreate";
+import api from "../../../lib/api";
+import "./styles.css";
 
 function DonatarioList() {
   const [listDonatario, setListDonatario] = useState([]);
@@ -20,21 +20,12 @@ function DonatarioList() {
   }, []);
 
   const handleRemove = (id) => {
-    api
-      .delete(`/donatarios/${id}`)
-      .then(() => {
-        const updatedList = listDonatario.filter(
-          (registro) => registro.id !== id
-        );
-        setListDonatario(updatedList);
-
-        console.log(`Registro com ID ${id} removido com sucesso.`);
-      })
-      .catch((error) => {
-        console.error(
-          `Erro ao remover o registro com ID ${id}: ${error.message}`
-        );
-      });
+    api.delete(`/donatarios/${id}`).then(() => {
+      const updatedList = listDonatario.filter(
+        (registro) => registro.id !== id
+      );
+      setListDonatario(updatedList);
+    });
   };
 
   const handleEdit = (id) => {

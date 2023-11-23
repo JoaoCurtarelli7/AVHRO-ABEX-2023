@@ -1,37 +1,28 @@
-import { useEffect, useState } from "react";
-import { Col, Form, Row, Table } from "antd";
-import "./styles.css";
-import TitleCreateList from "../../../components/TitleCreate";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
-import api from "../../../lib/api";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { Col, Form, Row, Table } from "antd";
 import dayjs from "dayjs";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import TitleCreateList from "../../../components/TitleCreate";
+import api from "../../../lib/api";
+import "./styles.css";
 
 function DoadorList() {
   const [listDoador, setListDoador] = useState([]);
   const navigate = useNavigate();
 
   useEffect(() => {
-    api.get("/donatarios").then((response) => {
+    api.get("/doador").then((response) => {
       setListDoador(response.data);
     });
   }, []);
 
   const handleRemove = (id) => {
-    api
-      .delete(`/donatarios/${id}`)
-      .then(() => {
-        const updatedList = listDoador.filter((registro) => registro.id !== id);
-        setListDoador(updatedList);
-
-        console.log(`Registro com ID ${id} removido com sucesso.`);
-      })
-      .catch((error) => {
-        console.error(
-          `Erro ao remover o registro com ID ${id}: ${error.message}`
-        );
-      });
+    api.delete(`/doador/${id}`).then(() => {
+      const updatedList = listDoador.filter((registro) => registro.id !== id);
+      setListDoador(updatedList);
+    });
   };
 
   const handleEdit = (id) => {
@@ -40,7 +31,7 @@ function DoadorList() {
     );
 
     if (registroParaEditar) {
-      navigate(`/donatarios-cadastro/${id}`);
+      navigate(`/doadores-cadastro/${id}`);
     }
   };
 

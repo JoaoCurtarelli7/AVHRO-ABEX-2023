@@ -1,27 +1,59 @@
-import { useState } from "react";
-import { Button, Col, Form, Input, List, Row } from "antd";
-import "./styles.css";
+import { Button, Col, Form, Input, Row } from "antd";
+import { useForm } from "antd/es/form/Form";
+import { useEffect } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import TitleCreateList from "../../../components/TitleCreate";
+import api from "../../../lib/api";
+import "./styles.css";
 
 function FamilyCreate() {
-  const [name, setName] = useState("");
-  const [names, setNames] = useState([]);
+  const [form] = useForm();
 
-  const addName = () => {
-    if (name.trim() !== "") {
-      setNames([...names, name]);
-      setName("");
+  const { id } = useParams();
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (id) {
+      api.get(`/familias/${id}`).then((response) => {
+        const { bairro, name, numeroIntegrantes, dataCadastro } = response.data;
+
+        const formattedDate = new Date(dataCadastro)
+          .toISOString()
+          .split("T")[0];
+
+        form.setFieldsValue({
+          bairro,
+          name,
+          numeroIntegrantes,
+          dataCadastro: formattedDate,
+        });
+      });
+    }
+  }, [form, id]);
+
+  const onFinish = async (values) => {
+    try {
+      const sendValues = {
+        bairro: values.bairro,
+        name: values.name,
+        numeroIntegrantes: Number(values.numeroIntegrantes),
+        dataCadastro: values.dataCadastro,
+      };
+
+      if (id) {
+        await api.put(`/familias/${id}`, sendValues);
+      } else {
+        await api.post("/familias", sendValues);
+      }
+      navigate("/familias");
+    } catch (error) {
+      console.log(error);
     }
   };
 
-  const removeName = (index) => {
-    const updatedNames = [...names];
-    updatedNames.splice(index, 1);
-    setNames(updatedNames);
-  };
-
   return (
-    <Form>
+    <Form form={form} onFinish={onFinish}>
       <TitleCreateList
         textTitle="Cadastro de Familía"
         route="/familias"
@@ -43,7 +75,7 @@ function FamilyCreate() {
         <Col span={10}>
           <Form.Item
             label="Data de Cadastro"
-            name="date"
+            name="dataCadastro"
             labelCol={{ span: 24 }}
             wrapperCol={{ span: 24 }}
           >
@@ -53,32 +85,7 @@ function FamilyCreate() {
       </Row>
 
       <Row gutter={[20, 16]}>
-        <Col span={10} offset={2}>
-          <Form.Item
-            label="Adicione os Integrantes da Família"
-            name="number"
-            labelCol={{ span: 24 }}
-            wrapperCol={{ span: 24 }}
-          >
-            <Row gutter={[8, 0]}>
-              <Col span={17}>
-                <Input
-                  placeholder="Digite um nome"
-                  size="large"
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                />
-              </Col>
-              <Col span={7}>
-                <Button type="primary" size="large" onClick={addName}>
-                  Adicionar Nome
-                </Button>
-              </Col>
-            </Row>
-          </Form.Item>
-        </Col>
-
-        <Col span={10}>
+        <Col offset={2} span={10}>
           <Form.Item
             label="Bairro"
             name="bairro"
@@ -88,34 +95,22 @@ function FamilyCreate() {
             <Input size="large" />
           </Form.Item>
         </Col>
-      </Row>
 
-      <Row gutter={[20, 16]}>
-        <Col span={10} offset={2}>
-          <List
-            bordered
-            dataSource={names}
-            renderItem={(item, index) => (
-              <List.Item
-                actions={[
-                  <Button type="link" onClick={() => removeName(index)}>
-                    Remover
-                  </Button>,
-                ]}
-              >
-                {item}
-              </List.Item>
-            )}
-          />
+        <Col span={10}>
+          <Form.Item
+            label="Quantidade de Integrantes da Família"
+            name="numeroIntegrantes"
+            labelCol={{ span: 24 }}
+            wrapperCol={{ span: 24 }}
+          >
+            <Input size="large" type="number" />
+          </Form.Item>
         </Col>
       </Row>
 
       <Row gutter={[20, 16]}>
         <Col offset={20}>
-          <Button
-            type="primary"
-            onClick={() => (window.location.href = "/doacoes-recebidas")}
-          >
+          <Button type="primary" htmlType="submit">
             Adicionar
           </Button>
         </Col>

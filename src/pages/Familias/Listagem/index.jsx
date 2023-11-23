@@ -1,14 +1,17 @@
-import { useEffect, useState } from "react";
-import { Col, Form, Row, Table } from "antd";
-import TitleCreateList from "../../../components/TitleCreate";
 import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { Col, Form, Row, Table } from "antd";
+import dayjs from "dayjs";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import TitleCreateList from "../../../components/TitleCreate";
+import api from "../../../lib/api";
 
 import "./styles.css";
-import api from "../../../lib/api";
 
 function FamilyList() {
   const [listFamilia, setListFamilia] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     api.get("/familias").then((response) => {
@@ -17,21 +20,20 @@ function FamilyList() {
   }, []);
 
   const handleRemove = (id) => {
-    api
-      .delete(`/familias/${id}`)
-      .then(() => {
-        const updatedList = listFamilia.filter(
-          (registro) => registro.id !== id
-        );
-        setListFamilia(updatedList);
+    api.delete(`/familias/${id}`).then(() => {
+      const updatedList = listFamilia.filter((registro) => registro.id !== id);
+      setListFamilia(updatedList);
+    });
+  };
 
-        console.log(`Registro com ID ${id} removido com sucesso.`);
-      })
-      .catch((error) => {
-        console.error(
-          `Erro ao remover o registro com ID ${id}: ${error.message}`
-        );
-      });
+  const handleEdit = (id) => {
+    const registroParaEditar = listFamilia.find(
+      (registro) => registro.id === id
+    );
+
+    if (registroParaEditar) {
+      navigate(`/familias-cadastro/${id}`);
+    }
   };
 
   const columns = [
@@ -41,7 +43,7 @@ function FamilyList() {
     },
     {
       title: "Numero de Integrantes",
-      dataIndex: "NumeroIntegrantes",
+      dataIndex: "numeroIntegrantes",
     },
     {
       title: "Bairro",
@@ -51,13 +53,7 @@ function FamilyList() {
       title: "Data de Cadastro",
       dataIndex: "dataCadastro",
       render: (value) => {
-        const data = new Date(value);
-
-        const dia = String(data.getDate()).padStart(2, "0");
-        const mes = String(data.getMonth() + 1).padStart(2, "0");
-        const ano = data.getFullYear();
-
-        return `${dia}/${mes}/${ano}`;
+        return dayjs(value).format("DD/MM/YYYY");
       },
     },
     {
@@ -69,13 +65,11 @@ function FamilyList() {
             <FontAwesomeIcon
               icon={faEdit}
               style={{ marginRight: "20px", cursor: "pointer" }}
-              isButton
+              onClick={() => handleEdit(record.id)}
               size="xl"
             />
-
             <FontAwesomeIcon
               icon={faTrash}
-              isButton
               size="xl"
               style={{ cursor: "pointer" }}
               onClick={() => handleRemove(record.id)}
@@ -99,7 +93,12 @@ function FamilyList() {
         style={{ display: "flex", justifyContent: "center" }}
       >
         <Col span={22}>
-          <Table dataSource={listFamilia} columns={columns} bordered />
+          <Table
+            dataSource={listFamilia}
+            columns={columns}
+            bordered
+            rowKey={(record) => record.id}
+          />
         </Col>
       </Row>
     </Form>

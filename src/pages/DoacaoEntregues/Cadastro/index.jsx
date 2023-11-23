@@ -1,10 +1,9 @@
-// import { useEffect, useState } from "react";
 import { Button, Col, Form, Input, Row, Select } from "antd";
-import "./styles.css";
-import TitleCreateList from "../../../components/TitleCreate";
-import { useNavigate, useParams } from "react-router-dom";
-import api from "../../../lib/api";
 import { useEffect, useMemo, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import TitleCreateList from "../../../components/TitleCreate";
+import api from "../../../lib/api";
+import "./styles.css";
 
 function DonationDeliveredCreate() {
   const [form] = Form.useForm();
@@ -20,14 +19,19 @@ function DonationDeliveredCreate() {
       setSelectDoador(response.data);
     });
 
-    api.get(`/doacoes-entregues/${id}`).then((response) => {
-      const { item, donatarioId } = response.data;
+    if (id) {
+      api.get(`/doacoes-entregues/${id}`).then((response) => {
+        const { item, donatarioId, date } = response.data;
 
-      form.setFieldsValue({
-        item,
-        donatarioId,
+        const formattedDate = new Date(date).toISOString().split("T")[0];
+
+        form.setFieldsValue({
+          item,
+          donatarioId,
+          date: formattedDate,
+        });
       });
-    });
+    }
   }, [form, id]);
 
   const itemsOptions = useMemo(() => {
@@ -41,9 +45,6 @@ function DonationDeliveredCreate() {
 
   const onFinish = async (values) => {
     try {
-      const currentDate = new Date();
-      const formattedDate = currentDate.toISOString();
-
       const donatarioOption = itemsOptions.find(
         (item) => item.value === values.donatarioId
       );
@@ -51,12 +52,16 @@ function DonationDeliveredCreate() {
       const sendValues = {
         item: values.item,
         donatarioId: donatarioOption.value,
-        date: formattedDate,
+        date: values.date,
       };
 
-      await api
-        .post("/doacoes-entregues", sendValues)
-        .then(() => navigate("/doacoes-entregues"));
+      if (id) {
+        await api.put(`/doacoes-entregues/${id}`, sendValues);
+      } else {
+        await api.post("/doacoes-entregues", sendValues);
+      }
+
+      navigate("/doacoes-entregues");
     } catch (error) {
       console.log(error);
     }
@@ -87,7 +92,7 @@ function DonationDeliveredCreate() {
 
         <Col span={10}>
           <Form.Item
-            label="Selecione o Doador"
+            label="Selecione o Donatario"
             name="donatarioId"
             labelCol={{ span: 24 }}
             wrapperCol={{ span: 24 }}
@@ -103,6 +108,19 @@ function DonationDeliveredCreate() {
               }
               options={itemsOptions}
             />
+          </Form.Item>
+        </Col>
+      </Row>
+
+      <Row gutter={[20, 16]}>
+        <Col span={10} offset={2}>
+          <Form.Item
+            label="Data de Cadastro"
+            name="date"
+            labelCol={{ span: 24 }}
+            wrapperCol={{ span: 24 }}
+          >
+            <Input type="date" size="large" />
           </Form.Item>
         </Col>
       </Row>

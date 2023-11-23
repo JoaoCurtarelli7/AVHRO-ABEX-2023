@@ -1,13 +1,13 @@
-import { useEffect, useState } from "react";
-import { Col, Form, Row, Table } from "antd";
-import TitleCreateList from "../../../components/TitleCreate";
 import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import api from "../../../lib/api";
+import { Col, Form, Row, Table } from "antd";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import TitleCreateList from "../../../components/TitleCreate";
+import api from "../../../lib/api";
 
-import "./styles.css";
 import dayjs from "dayjs";
+import "./styles.css";
 
 function DonationDeliveredList() {
   const [listDoacaoEntregues, setListDoacaoEntregues] = useState([]);
@@ -15,29 +15,18 @@ function DonationDeliveredList() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    console.log("teste");
-
     api.get("/doacoes-entregues").then((response) => {
       setListDoacaoEntregues(response.data);
     });
   }, []);
 
   const handleRemove = (id) => {
-    api
-      .delete(`/doacoes-entregues/${id}`)
-      .then(() => {
-        const updatedList = listDoacaoEntregues.filter(
-          (registro) => registro.id !== id
-        );
-        setListDoacaoEntregues(updatedList);
-
-        console.log(`Registro com ID ${id} removido com sucesso.`);
-      })
-      .catch((error) => {
-        console.error(
-          `Erro ao remover o registro com ID ${id}: ${error.message}`
-        );
-      });
+    api.delete(`/doacoes-entregues/${id}`).then(() => {
+      const updatedList = listDoacaoEntregues.filter(
+        (registro) => registro.id !== id
+      );
+      setListDoacaoEntregues(updatedList);
+    });
   };
 
   const handleEdit = (id) => {
@@ -69,6 +58,13 @@ function DonationDeliveredList() {
       dataIndex: "donatario",
       render: (value) => {
         return value.name;
+      },
+    },
+    {
+      title: "CPF Donatário",
+      dataIndex: "donatario",
+      render: (value) => {
+        return value.cpf;
       },
     },
     {

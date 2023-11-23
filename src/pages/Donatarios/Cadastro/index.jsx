@@ -1,9 +1,9 @@
 import { Button, Col, Form, Input, Row } from "antd";
-import "./styles.css";
-import TitleCreateList from "../../../components/TitleCreate";
-import api from "../../../lib/api";
 import { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import TitleCreateList from "../../../components/TitleCreate";
+import api from "../../../lib/api";
+import "./styles.css";
 
 function GranteeCreate() {
   const [form] = Form.useForm();
@@ -13,30 +13,39 @@ function GranteeCreate() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    api.get(`/donatarios/${id}`).then((response) => {
-      const { name, cpf } = response.data;
+    if (id) {
+      api.get(`/donatarios/${id}`).then((response) => {
+        const { name, cpf, dataCadastro } = response.data;
 
-      form.setFieldsValue({
-        name,
-        cpf,
+        const formattedDate = new Date(dataCadastro)
+          .toISOString()
+          .split("T")[0];
+
+        form.setFieldsValue({
+          name,
+          cpf,
+          dataCadastro: formattedDate,
+        });
       });
-    });
+    }
   }, [form, id]);
 
   const onFinish = async (values) => {
     try {
-      const currentDate = new Date();
-      const formattedDate = currentDate.toISOString();
-
+      console.log(values.dataCadastro);
       const sendValues = {
         name: values.name,
         cpf: values.cpf,
-        dataCadastro: formattedDate,
+        dataCadastro: values.dataCadastro,
       };
 
-      await api
-        .post("/donatarios", sendValues)
-        .then(() => navigate("/donatarios"));
+      if (id) {
+        await api.put(`/donatarios/${id}`, sendValues);
+      } else {
+        await api.post("/donatarios", sendValues);
+      }
+
+      navigate("/donatarios");
     } catch (error) {
       console.log(error);
     }
@@ -70,6 +79,19 @@ function GranteeCreate() {
             wrapperCol={{ span: 24 }}
           >
             <Input size="large" />
+          </Form.Item>
+        </Col>
+      </Row>
+
+      <Row gutter={[20, 16]}>
+        <Col span={10} offset={2}>
+          <Form.Item
+            label="Data de Cadastro"
+            name="dataCadastro"
+            labelCol={{ span: 24 }}
+            wrapperCol={{ span: 24 }}
+          >
+            <Input type="date" size="large" />
           </Form.Item>
         </Col>
       </Row>
