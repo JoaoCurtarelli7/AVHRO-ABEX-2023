@@ -15,13 +15,3 @@
   margin-left: 40px;
   font-weight: 500;
 }
-
-.add-icon {
-  color: #0066ff;
-  transition: transform 0.2s ease-in-out;
-  cursor: pointer;
-}
-
-.add-icon:hover {
-  transform: scale(1.1); /* Aumente o ícone ao passar o mouse */
-}

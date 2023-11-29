@@ -1,9 +1,13 @@
 import { faChevronLeft, faPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Col, Row } from "antd";
+import { useNavigate } from "react-router-dom";
 import "./styles.css";
 
+// eslint-disable-next-line react/prop-types
 function TitleCreateList({ textTitle, route, create }) {
+  const navigate = useNavigate();
+
   return (
     <Row
       gutter={[20, 16]}
@@ -17,10 +21,7 @@ function TitleCreateList({ textTitle, route, create }) {
             span={19}
             style={{ display: "flex", justifyContent: "flex-end" }}
           >
-            <span
-              className="add-icon"
-              onClick={() => (window.location.href = route)}
-            >
+            <span className="add-icon" onClick={() => navigate(route)}>
               <FontAwesomeIcon
                 icon={create ? faChevronLeft : faPlus}
                 size="2x"

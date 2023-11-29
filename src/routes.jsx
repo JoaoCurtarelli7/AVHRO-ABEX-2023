@@ -1,16 +1,17 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Home from "./pages/Home";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import FooterPages from "./components/FooterPages";
 import HeaderPages from "./components/HeaderPages";
-import DonationReceivedCreate from "./pages/DoacaoRecebidas/Cadastro";
-import DonationDeliveredList from "./pages/DoacaoEntregues/Listagem";
-import DonationDeliveredCreate from "./pages/DoacaoEntregues/Cadastro";
-import DonatariosList from "./pages/Donatarios/Listagem";
-import DonatariosCreate from "./pages/Donatarios/Cadastro";
-import DonorList from "./pages/Doadores/Listagem";
-import DonorCreate from "./pages/Doadores/Cadastro";
-import DonationReceivedList from "./pages/DoacaoRecebidas/Listagem";
-import FamilyCreate from "./pages/Familias/Cadastro";
-import FamilyList from "./pages/Familias/Listagem";
+import DonaratyList from "./pages/Donatary/List";
+import DonaratyCreate from "./pages/Donatary/Register";
+import DonationDeliveredList from "./pages/DonationDelivered/List";
+import DonationDeliveredCreate from "./pages/DonationDelivered/Register";
+import DonationReceivedList from "./pages/DonationReceived/List";
+import DonationReceivedCreate from "./pages/DonationReceived/Register";
+import DonorList from "./pages/Donor/List";
+import DonorCreate from "./pages/Donor/Register";
+import FamilyList from "./pages/Family/List";
+import FamilyCreate from "./pages/Family/Register";
+import Home from "./pages/Home";
 import NotFound from "./pages/NotFoud";
 
 function AppRoutes() {
@@ -19,31 +20,36 @@ function AppRoutes() {
       <HeaderPages />
 
       <Routes>
-        <Route path="/" element={<Home />} />
-
-        <Route path="/doacoes-recebidas" element={<DonationReceivedList />} />
         <Route
-          path="/doacoes-recebidas-cadastro/:id?"
+          path="/"
+          element={
+            <>
+              <Home />
+              <FooterPages />
+            </>
+          }
+        />
+
+        <Route path="/donation-received" element={<DonationReceivedList />} />
+        <Route
+          path="/donation-received-register/:id?"
           element={<DonationReceivedCreate />}
         />
 
-        <Route path="/doacoes-entregues" element={<DonationDeliveredList />} />
+        <Route path="/donation-delivered" element={<DonationDeliveredList />} />
         <Route
-          path="/doacoes-entregues-cadastro/:id?"
+          path="/donation-delivered-register/:id?"
           element={<DonationDeliveredCreate />}
         />
 
-        <Route path="/donatarios" element={<DonatariosList />} />
-        <Route
-          path="/donatarios-cadastro/:id?"
-          element={<DonatariosCreate />}
-        />
+        <Route path="/donatary" element={<DonaratyList />} />
+        <Route path="/donatary-register/:id?" element={<DonaratyCreate />} />
 
-        <Route path="/doadores" element={<DonorList />} />
-        <Route path="/doadores-cadastro/:id?" element={<DonorCreate />} />
+        <Route path="/donor" element={<DonorList />} />
+        <Route path="/donor-register/:id?" element={<DonorCreate />} />
 
-        <Route path="/familias" element={<FamilyList />} />
-        <Route path="/familias-cadastro/:id?" element={<FamilyCreate />} />
+        <Route path="/family" element={<FamilyList />} />
+        <Route path="/family-register/:id?" element={<FamilyCreate />} />
 
         <Route path="*" element={<NotFound />} />
       </Routes>

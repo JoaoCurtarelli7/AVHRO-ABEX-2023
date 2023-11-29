@@ -18,10 +18,10 @@
 
 .add-icon {
   color: #0066ff;
-  transition: transform 0.2s ease-in-out;
+  transition: transform 0.3s ease-in-out;
   cursor: pointer;
 }
 
 .add-icon:hover {
-  transform: scale(1.1); /* Aumente o ícone ao passar o mouse */
+  transform: scale(1.2); /* Aumente o ícone ao passar o mouse */
 }

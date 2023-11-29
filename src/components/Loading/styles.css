@@ -27,7 +27,7 @@
   height: 40px;
   width: 40px;
   border-radius: 50%;
-  animation: bounce-ball 5s alternate infinite ease-in-out;
+  animation: bounce-ball 1.4s alternate infinite ease-in-out;
   animation-fill-mode: both;
   transform: translate3d(0, 0, 0);
   margin: 0 10px;
