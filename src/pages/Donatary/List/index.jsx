@@ -9,7 +9,6 @@ import Loader from "../../../components/Loading";
 import TitleCreateList from "../../../components/TitleCreate";
 import api from "../../../lib/api";
 import "./styles.css";
-import { ToastContainer } from "react-toastify";
 
 function DonaratyList() {
   const [loading, setLoading] = useState(false);
