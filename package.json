@@ -25,7 +25,8 @@
     "react-input-mask": "^2.0.4",
     "react-onesignal": "^3.0.1",
     "react-router-dom": "^6.15.0",
-    "react-text-mask": "^5.5.0"
+    "react-text-mask": "^5.5.0",
+    "react-toastify": "^10.0.5"
   },
   "devDependencies": {
     "@types/react": "^18.2.34",

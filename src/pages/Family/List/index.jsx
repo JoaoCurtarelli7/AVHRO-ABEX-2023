@@ -31,6 +31,10 @@ function FamilyList() {
         );
         setListFamilia(updatedList);
       })
+      .catch(() =>      
+      alert("Não foi possível remover o registro, pois ele está vinculado a algum outro registro."),
+      setLoading(false)
+      )
       .finally(() => setLoading(false));
   };
 

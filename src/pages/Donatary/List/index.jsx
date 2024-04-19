@@ -9,6 +9,7 @@ import Loader from "../../../components/Loading";
 import TitleCreateList from "../../../components/TitleCreate";
 import api from "../../../lib/api";
 import "./styles.css";
+import { ToastContainer } from "react-toastify";
 
 function DonaratyList() {
   const [loading, setLoading] = useState(false);
@@ -33,6 +34,10 @@ function DonaratyList() {
         );
         setListDonaraty(updatedList);
       })
+      .catch(() =>
+        alert("Não foi possível remover o registro, pois ele está vinculado a algum outro registro."),
+        setLoading(false)
+      )
       .finally(() => setLoading(false));
   };
 
@@ -90,6 +95,7 @@ function DonaratyList() {
   return (
     <>
       {loading && <Loader loading={loading} />}
+
       <Form>
         <TitleCreateList
           textTitle="Listagem de Donatários"

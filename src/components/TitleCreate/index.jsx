@@ -18,7 +18,7 @@ function TitleCreateList({ textTitle, route, create }) {
           <span className="content-title">{textTitle}</span>
 
           <Col
-            span={19}
+            span={18}
             style={{ display: "flex", justifyContent: "flex-end" }}
           >
             <span className="add-icon" onClick={() => navigate(route)}>
